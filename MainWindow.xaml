@@ -2,7 +2,7 @@
     Name: Thi Ty Tran
     Date Created: Oct 7, 2024
     Description: Tic Tac Toe App - Assignment 2
-    Last modified: Oct 12, 2024 
+    Last modified: Oct 14, 2024 
 -->
 
 <Window x:Class="TicTacToe.MainWindow"
@@ -37,8 +37,8 @@
         <Label Name="currentPlayerLbl" FontWeight="Bold" Grid.Row="2" Grid.Column="1" Content="Current Player " HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <!-- TextBoxes -->
-        <TextBox Name ="xPlayerNameTxtBox" Grid.Row="1" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" Width="80" />
-        <TextBox Name ="oPlayerNameTxtBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="center" VerticalAlignment="Center" Width="80" />
+        <TextBox Name ="xPlayerNameTxtBox" Grid.Row="1" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" Width="80" ToolTip="Enter X-player name" TabIndex="0" />
+        <TextBox Name ="oPlayerNameTxtBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="center" VerticalAlignment="Center" Width="80" ToolTip="Enter O-player name" TabIndex="1" />
         <TextBox Name ="currentPlayerTxtBox" Grid.Row="2" Grid.Column="1" Text="X" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" Width="30" Margin="100,0,0,0"/>
 
         <!-- Nested Grids-->
@@ -56,19 +56,19 @@
             </Grid.ColumnDefinitions>
 
             <!-- First Row Buttons -->
-            <Button Name="btn00" Grid.Row="0" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click" />
-            <Button Name="btn01" Grid.Row="0" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click"/>
-            <Button Name="btn02" Grid.Row="0" Grid.Column="2"  FontSize="50" Margin="5"  Click="Button_Click"/>
+            <Button Name="btn00" Grid.Row="0" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="2"/>
+            <Button Name="btn01" Grid.Row="0" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="3"/>
+            <Button Name="btn02" Grid.Row="0" Grid.Column="2"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="4"/>
 
             <!-- Second Row Buttons -->
-            <Button Name="btn10" Grid.Row="1" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click"/>
-            <Button Name="btn11" Grid.Row="1" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click"/>
-            <Button Name="btn12" Grid.Row="1" Grid.Column="2"  FontSize="50" Margin="5"  Click="Button_Click"/>
+            <Button Name="btn10" Grid.Row="1" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="5"/>
+            <Button Name="btn11" Grid.Row="1" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="6"/>
+            <Button Name="btn12" Grid.Row="1" Grid.Column="2"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="7"/>
 
             <!-- Third Row Buttons -->
-            <Button Name="btn20" Grid.Row="2" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click"/>
-            <Button Name="btn21" Grid.Row="2" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click"/>
-            <Button Name="btn22" Grid.Row="2" Grid.Column="2"  FontSize="50" Margin="5" Click="Button_Click"/>
+            <Button Name="btn20" Grid.Row="2" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="8"/>
+            <Button Name="btn21" Grid.Row="2" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click" ToolTip="Click to play" TabIndex="9"/>
+            <Button Name="btn22" Grid.Row="2" Grid.Column="2"  FontSize="50" Margin="5" Click="Button_Click" ToolTip="Click to play" TabIndex="10"/>
 
         </Grid>
         <!-- Labels -->
@@ -81,8 +81,8 @@
         <TextBox Grid.Column="3" Name="oPlayerScoreTxtBox" HorizontalAlignment="Left" Margin="54,71,0,0" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Top" Width="60" IsEnabled="False"/>
 
         <!-- Buttons -->
-        <Button Grid.Column="3" Name="resetButton" Content="Reset" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="29,198,0,0" Grid.Row="3" VerticalAlignment="Top" Height="38" Width="130" Click="ResetButton_Click"  Background="LightGreen"/>
-        <Button Grid.Column="3" Name="exitButton" Content="Exit" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="30,252,0,0" Grid.Row="3" VerticalAlignment="Top" Height="38" Width="130" Click="ExitButton_Click" Background="PaleVioletRed"/>
+        <Button Grid.Column="3" Name="resetButton" Content="_Reset" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="29,198,0,0" Grid.Row="3" VerticalAlignment="Top" Height="38" Width="130" Click="ResetButton_Click"  Background="LightGreen" ToolTip="Click to clear all" TabIndex="11"/>
+        <Button Grid.Column="3" Name="exitButton" Content="E_xit" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="30,252,0,0" Grid.Row="3" VerticalAlignment="Top" Height="38" Width="130" Click="ExitButton_Click" Background="PaleVioletRed" ToolTip="Click to close the app" TabIndex="12"/>
 
     </Grid>
 </Window>
