@@ -35,12 +35,12 @@ namespace TicTacToe
         {
             InitializeComponent();       // Initialize UI components
             ResetBoard();               // Set up the game board
-            xPlayerNameTxtBox.Focus(); // Focus on the X player's name input
+            xPlayerNameTxtBox.Focus();  // Focus on the X player's name input
         }
 
         /// <summary>
         /// Handles the click event for the game buttons
-        /// Managing game state updates such as checking for a winner or a draw
+        /// Updates game state, checks for winner or draw
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -48,24 +48,27 @@ namespace TicTacToe
         {
             Button clickedButton = sender as Button;
 
-            // Extarct the row and colum from button's Name 
-            string buttonName = clickedButton.Name;             // Btn00, Button identifier
-            int row = int.Parse(buttonName[3].ToString());     // Row index
-            int column = int.Parse(buttonName[4].ToString()); // Column index
+            // Extract the row and column from the button's Name 
+            string buttonName = clickedButton.Name;             // Button identifier (e.g., Btn00)
+            int row = int.Parse(buttonName[3].ToString());      // Row index
+            int column = int.Parse(buttonName[4].ToString());   // Column index
 
-            // Check if button is already clicked
+            // Check if the button has already been clicked
             if (!string.IsNullOrEmpty(boardGame[row, column]))
             {
                 return; // Exit if the cell is already occupied
             }
 
-            //Update the board and UI
-            clickedButton.Content = currentPlayer;  // Show current player's symbol
-            boardGame[row, column] = currentPlayer; // Update the board state
+            // Update the board and UI with the current player's move
+            clickedButton.Content = currentPlayer;  // Show current player's symbol on the button
+            boardGame[row, column] = currentPlayer; // Update the board state with the current move
 
-            // Check for winner
-            if (checkWinner(boardGame))
+            // Check if there's a winner
+            if (CheckWinner())
             {
+                // Highlight the winning line
+                HighlightWinningLine();
+
                 // Get the winner's name
                 string winnerName;
 
@@ -78,7 +81,7 @@ namespace TicTacToe
                 {
                     winnerName = oPlayerNameTxtBox.Text;  // Get the O player's name
                 }
-                
+
                 // Display winner message
                 MessageBox.Show($"🎊 {winnerName} ({currentPlayer}) is the winnner 🎊");
                 UpdateScore(); // Update the score for the winner
@@ -86,11 +89,14 @@ namespace TicTacToe
                 return;
             }
 
-            // Check for draw
+            // Check if it's a draw
             if (CheckDraw())
             {
-                MessageBox.Show("It's a draw!"); // Notify players of a draw
-                ResetBoard();                   // Reset the board for a new game
+                // Display draw message
+                MessageBox.Show("It's a draw!");
+
+                // Reset the board for a new game
+                ResetBoard();
                 return;
             }
 
@@ -106,151 +112,202 @@ namespace TicTacToe
 
             // Update the current player display in the textbox
             currentPlayerTxtBox.Text = currentPlayer;
-
         }
+
         /// <summary>
-        /// Checks if there is a winner on the board
+        /// Checks if there is a winner by analyzing rows, columns, and diagonals
         /// </summary>
-        /// <param name="boadrGame"></param>
-        /// <returns>Return true if any row, column diagonal are the same, otherwise it will return false</returns>
-        private bool checkWinner(string[,] boardGame)
+        /// <returns>True if there's a winner, false otherwise</returns>
+        private bool CheckWinner()
         {
-            // Size of tic-tac toe board (3x3)
-            int size = 3;
-
-            for (int index = 0; index < size; index++)
+            // Check all rows and columns for a winner
+            for (int index = 0; index < 3; index++)
             {
-                // Checking for a win for rows
-
+                // Check rows
                 if (
-                        boardGame[index, 0] == boardGame[index, 1] &&
-                        boardGame[index, 1] == boardGame[index, 2] &&
-                        !string.IsNullOrEmpty(boardGame[index, 0])
-                    )
-                {
-                    return true; // Row win detected
-                }
+                    boardGame[index, 0] == currentPlayer && 
+                    boardGame[index, 1] == currentPlayer && 
+                    boardGame[index, 2] == currentPlayer)
+                    return true;
 
-                // Checking a win for columns
-
+                // Check columns
                 if (
-                        boardGame[0, index] == boardGame[1, index] &&
-                        boardGame[1, index] == boardGame[2, index] &&
-                        !string.IsNullOrEmpty(boardGame[0, index])
-                    )
-                { 
-                    return true; // Column win detected
-                }
+                    boardGame[0, index] == currentPlayer && 
+                    boardGame[1, index] == currentPlayer && 
+                    boardGame[2, index] == currentPlayer)
+                    return true;
             }
 
-            // check for diagonal from top left - to bottom right
+            // Check diagonals for a winner
             if (
-                    boardGame[0, 0] == boardGame[1, 1] &&
-                    boardGame[1, 1] == boardGame[2, 2] && !
-                    string.IsNullOrEmpty(boardGame[0, 0])
-                )
-            {
+                boardGame[0, 0] == currentPlayer && 
+                boardGame[1, 1] == currentPlayer && 
+                boardGame[2, 2] == currentPlayer)
                 return true;
-            }
 
-            // Check for diagonal from top right - to bottom left
-            if (
-                    boardGame[0, 2] == boardGame[1, 1] &&
-                    boardGame[1, 1] == boardGame[2, 0] && !
-                    string.IsNullOrEmpty(boardGame[0, 2])
-                )
-            {
-                return true; // Diagonal win detected
-            }
+            if (boardGame[0, 2] == currentPlayer && 
+                boardGame[1, 1] == currentPlayer && 
+                boardGame[2, 0] == currentPlayer)
+                return true;
 
-            // If nothing matches return false → No winner found
+            // No winner found
             return false;
         }
 
         /// <summary>
-        /// Check for Draw
+        /// Highlights the buttons that form the winning line using a bright color
         /// </summary>
-        /// <returns></returns>
+        private void HighlightWinningLine()
+        {
+            // Check rows for a winning line
+            for (int index = 0; index < 3; index++)
+            {
+                if (
+                    boardGame[index, 0] == currentPlayer && 
+                    boardGame[index, 1] == currentPlayer && 
+                    boardGame[index, 2] == currentPlayer)
+                {
+                    HighlightButtons($"btn{index}0", $"btn{index}1", $"btn{index}2");
+                    return;
+                }
+            }
+
+            // Check columns for a winning line
+            for (int index = 0; index < 3; index++)
+            {
+                if (
+                    boardGame[0, index] == currentPlayer && 
+                    boardGame[1, index] == currentPlayer && 
+                    boardGame[2, index] == currentPlayer)
+                {
+                    HighlightButtons($"btn0{index}", $"btn1{index}", $"btn2{index}");
+                    return;
+                }
+            }
+
+            // Check diagonals for a winning line
+            if (
+                boardGame[0, 0] == currentPlayer && 
+                boardGame[1, 1] == currentPlayer && 
+                boardGame[2, 2] == currentPlayer)
+            {
+                HighlightButtons("btn00", "btn11", "btn22");
+            }
+            else if (boardGame[0, 2] == currentPlayer && 
+                    boardGame[1, 1] == currentPlayer && 
+                    boardGame[2, 0] == currentPlayer)
+            {
+                HighlightButtons("btn02", "btn11", "btn20");
+            }
+        }
+
+        /// <summary>
+        /// Sets the background color of the buttons in the winning line to yellow
+        /// </summary>
+        /// <param name="btn1">First button in the winning line</param>
+        /// <param name="btn2">Second button in the winning line</param>
+        /// <param name="btn3">Third button in the winning line</param>
+        private void HighlightButtons(string btn1, string btn2, string btn3)
+        {
+            // Find and highlight each button in the winning line
+            Button button1 = (Button)FindName(btn1);
+            Button button2 = (Button)FindName(btn2);
+            Button button3 = (Button)FindName(btn3);
+
+            // Set the background color to yellow
+            button1.Background = Brushes.Yellow;
+            button2.Background = Brushes.Yellow;
+            button3.Background = Brushes.Yellow;
+        }
+
+        /// <summary>
+        /// Checks if the game is a draw 
+        /// </summary>
+        /// <returns>True if it's a draw, false otherwise</returns>
         private bool CheckDraw()
         {
+            // Loop through each cell in the board and check if there's an empty cell
             foreach (var cell in boardGame)
             {
                 if (string.IsNullOrEmpty(cell))
                 {
-                    return false;  // There's still an empty cell, so no draw.
+                    return false;  // Exit if there's at least one empty cell
                 }
             }
-            return true;  // No empty cells, so it's a draw.
+            return true;  // No empty cells found, it's a draw
         }
 
         /// <summary>
-        /// Reset board
+        /// Resets the game board and clears the button content for a new game
         /// </summary>
         private void ResetBoard()
         {
-            // CLear board data
+            // Clear the board data
             boardGame = new string[3, 3];
-            currentPlayer = "X";
-            currentPlayerTxtBox.Text = currentPlayer;
+            currentPlayer = "X";                        // Set current player to "X" for the new game
+            currentPlayerTxtBox.Text = currentPlayer;  // Update the current player display
 
-            // Clear buttons
-            btn00.Content = "";
-            btn01.Content = "";
-            btn02.Content = "";
-            btn10.Content = "";
-            btn11.Content = "";
-            btn12.Content = "";
-            btn20.Content = "";
-            btn21.Content = "";
-            btn22.Content = "";
-
+            // Clear all button contents and reset background color
+            btn00.Content = ""; btn00.Background = Brushes.White;
+            btn01.Content = ""; btn01.Background = Brushes.White;
+            btn02.Content = ""; btn02.Background = Brushes.White;
+            btn10.Content = ""; btn10.Background = Brushes.White;
+            btn11.Content = ""; btn11.Background = Brushes.White;
+            btn12.Content = ""; btn12.Background = Brushes.White;
+            btn20.Content = ""; btn20.Background = Brushes.White;
+            btn21.Content = ""; btn21.Background = Brushes.White;
+            btn22.Content = ""; btn22.Background = Brushes.White;
         }
 
         /// <summary>
-        /// Update scores
+        /// Updates the score for the current player after winning
         /// </summary>
         private void UpdateScore()
         {
-            // Update scores based on the current player
+            // Increment the score for the current player
             if (currentPlayer == "X")
             {
                 xPlayerScore++;                                    // Increment X player's score
-                xPlayerScoreTxtBox.Text = xPlayerScore.ToString(); // Update UI
+                xPlayerScoreTxtBox.Text = xPlayerScore.ToString(); // Update X player's score display
             }
             else
             {
-                oPlayerScore++;                                     // Increment O player's score
-                oPlayerScoreTxtBox.Text = oPlayerScore.ToString(); // Update UI
+                oPlayerScore++;                                    // Increment O player's score
+                oPlayerScoreTxtBox.Text = oPlayerScore.ToString(); // Update O player's score display
             }
         }
 
         /// <summary>
-        /// Clear all data
+        /// Resets all game data including player names and scores, ready for a new game
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {
-            // Reset the scores to 0
+            // Reset the scores to 0 for both players
             xPlayerScore = 0;
             oPlayerScore = 0;
 
-            // Update the score textboxes in the UI
+            // Update the score display textboxes
             xPlayerScoreTxtBox.Text = xPlayerScore.ToString();
             oPlayerScoreTxtBox.Text = oPlayerScore.ToString();
 
-            // Clear player names
+            // Clear the player names
             xPlayerNameTxtBox.Clear();
             oPlayerNameTxtBox.Clear();
 
-            // Reset game board
+            // Reset the board for a new game
             ResetBoard();
         }
 
-        // Close the app
+        /// <summary>
+        /// Closes the application when the Exit button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            Close();  // Closes the application
         }
     }
 }
