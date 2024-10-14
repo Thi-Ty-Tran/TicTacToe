@@ -1,0 +1,88 @@
+﻿<!--
+    Name: Thi Ty Tran
+    Date Created: Oct 7, 2024
+    Description: Tic Tac Toe App - Assignment 2
+    Last modified: Oct 12, 2024 
+-->
+
+<Window x:Class="TicTacToe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TicTacToe"
+        mc:Ignorable="d"
+        Title="Tic Tac Toe" Height="450" Width="800"
+        Icon="icon.png"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Labels -->
+        <Label Name="gameTitleLbl"  Grid.Row="0" Grid.Column="0" Content="TIC TAC TOE" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="ExtraBold"/>
+        <Label Name="xPlayerNameLbl" Grid.Row="1" Grid.Column="0" Content="X Player: " FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Name="oPlayerNameLbl" FontWeight="Bold" Grid.Row="1" Grid.Column="1" Content="O Player: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Name="currentPlayerLbl" FontWeight="Bold" Grid.Row="2" Grid.Column="1" Content="Current Player " HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <!-- TextBoxes -->
+        <TextBox Name ="xPlayerNameTxtBox" Grid.Row="1" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" Width="80" />
+        <TextBox Name ="oPlayerNameTxtBox" Grid.Row="1" Grid.Column="1" HorizontalAlignment="center" VerticalAlignment="Center" Width="80" />
+        <TextBox Name ="currentPlayerTxtBox" Grid.Row="2" Grid.Column="1" Text="X" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Center" Width="30" Margin="100,0,0,0"/>
+
+        <!-- Nested Grids-->
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="10" Background="Yellow">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- First Row Buttons -->
+            <Button Name="btn00" Grid.Row="0" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click" />
+            <Button Name="btn01" Grid.Row="0" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click"/>
+            <Button Name="btn02" Grid.Row="0" Grid.Column="2"  FontSize="50" Margin="5"  Click="Button_Click"/>
+
+            <!-- Second Row Buttons -->
+            <Button Name="btn10" Grid.Row="1" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click"/>
+            <Button Name="btn11" Grid.Row="1" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click"/>
+            <Button Name="btn12" Grid.Row="1" Grid.Column="2"  FontSize="50" Margin="5"  Click="Button_Click"/>
+
+            <!-- Third Row Buttons -->
+            <Button Name="btn20" Grid.Row="2" Grid.Column="0"  FontSize="50" Margin="5"  Click="Button_Click"/>
+            <Button Name="btn21" Grid.Row="2" Grid.Column="1"  FontSize="50" Margin="5"  Click="Button_Click"/>
+            <Button Name="btn22" Grid.Row="2" Grid.Column="2"  FontSize="50" Margin="5" Click="Button_Click"/>
+
+        </Grid>
+        <!-- Labels -->
+        <Label Grid.Column="3" Content="Score" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+        <Label Grid.Column="3" Content="X" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,36,0,0" Grid.Row="3" VerticalAlignment="Top" RenderTransformOrigin="-0.391,0.335" Width="39"/>
+        <Label Grid.Column="3" Content="O" FontWeight="Bold" HorizontalAlignment="Left" Margin="10,67,0,0" Grid.Row="3" VerticalAlignment="Top"/>
+
+        <!-- Text Boxes -->
+        <TextBox Grid.Column="3" Name="xPlayerScoreTxtBox" HorizontalAlignment="Left" Margin="54,36,0,0" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Top" Width="60" IsEnabled="False" />
+        <TextBox Grid.Column="3" Name="oPlayerScoreTxtBox" HorizontalAlignment="Left" Margin="54,71,0,0" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Top" Width="60" IsEnabled="False"/>
+
+        <!-- Buttons -->
+        <Button Grid.Column="3" Name="resetButton" Content="Reset" HorizontalAlignment="Left" FontSize="20" FontWeight="Bold" Margin="29,198,0,0" Grid.Row="3" VerticalAlignment="Top" Height="38" Width="130" Click="ResetButton_Click"  Background="LightGreen"/>
+        <Button Grid.Column="3" Name="exitButton" Content="Exit" FontSize="20" FontWeight="Bold" HorizontalAlignment="Left" Margin="30,252,0,0" Grid.Row="3" VerticalAlignment="Top" Height="38" Width="130" Click="ExitButton_Click" Background="PaleVioletRed"/>
+
+    </Grid>
+</Window>
